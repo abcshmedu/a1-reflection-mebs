@@ -10,9 +10,9 @@ public class Renderer {
     //TODO set object-variables
     private int firstVariable = 0;
 
-    Renderer(int i) {
+    Renderer() {
         //TODO find out what this constructor does with the object as parameter. Which type of object is given as parameter?
-        this.firstVariable = i;
+        this.firstVariable = 0;
     }
 
     /* @RenderMe */
