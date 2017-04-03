@@ -15,6 +15,5 @@ public @interface RenderMe {
      * First test-method.
      * @return message as String
      */
-    String message() default "Annotation \"message\" is called successfully"; // this is a test-annotation. It will be removed in final version.
-
+    ArrayRenderer with() default new ArrayRenderer(int[] array);
 }

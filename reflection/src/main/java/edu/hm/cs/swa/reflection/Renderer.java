@@ -1,5 +1,7 @@
 package edu.hm.cs.swa.reflection;
 
+import java.lang.reflect.Field;
+
 /**
  * This is the class Renderer for an easy reflection.
  * @author Sebastian Baumann & Ehsan Moslehi
@@ -7,23 +9,25 @@ package edu.hm.cs.swa.reflection;
 
 public class Renderer {
 
-    //TODO set object-variables
-	@RenderMe
-    private int firstVariable = 0;
+    private Object obj;
 
-    Renderer(int var) {
-        //TODO find out what this constructor does with the object as parameter. Which type of object is given as parameter?
-        this.firstVariable = var;
+    Renderer(Object obj) {
+        this.obj = obj;
     }
 
-    /* @RenderMe */
     /**
      * First implementation of public String render() method.
      * @return message as String
+     * @throws IllegalAccessException if field.get(obj) fails to access a value
      */
-    public String render() {
-        //TODO return comfortable string representation like toString()-method
-        return String.valueOf(firstVariable);
+    public String render(Object obj) throws IllegalAccessException {
+        String s = "";
+        Class<?> type = obj.getClass();
+        for (Field field: type.getDeclaredFields()) {
+            field.setAccessible(true);
+            s += field.getName() + " (Type " + field.getType().getCanonicalName() + "): " + field.get(obj) + "\\n";
+        }
+        return s;
     }
 
 }
