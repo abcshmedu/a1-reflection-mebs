@@ -7,6 +7,7 @@ public class ArrayRenderer {
 
     String s = "[";
     int[] array;
+    public ArrayRenderer(){}
 
     public ArrayRenderer(int[] array) {
         this.array = array;
@@ -18,7 +19,7 @@ public class ArrayRenderer {
     public String render(int[] array) throws IllegalAccessException {
 
         for (int i = 0; i < array.length; i++) {
-            s += array[i];
+            s += array[i] + ", ";
         }
         return s += "]\\n";
     }

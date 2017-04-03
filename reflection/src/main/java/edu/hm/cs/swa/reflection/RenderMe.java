@@ -8,12 +8,12 @@ import java.lang.annotation.RetentionPolicy;
  * @author Sebastian Baumann & Ehsan Moslehi
  */
 
-@Retention(RetentionPolicy.SOURCE)  // sets retention of this annotation to source code like comments
+@Retention(RetentionPolicy.RUNTIME)  // sets retention of this annotation to source code like comments
 public @interface RenderMe {
 
     /**
      * First test-method.
      * @return message as String
      */
-    ArrayRenderer with() default new ArrayRenderer(int[] array);
+    String with() default "";
 }
