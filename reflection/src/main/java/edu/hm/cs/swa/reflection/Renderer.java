@@ -8,11 +8,12 @@ package edu.hm.cs.swa.reflection;
 public class Renderer {
 
     //TODO set object-variables
+	@RenderMe
     private int firstVariable = 0;
 
-    Renderer() {
+    Renderer(int var) {
         //TODO find out what this constructor does with the object as parameter. Which type of object is given as parameter?
-        this.firstVariable = 0;
+        this.firstVariable = var;
     }
 
     /* @RenderMe */

@@ -8,10 +8,13 @@ import java.lang.reflect.Field;
 public class Tests {
 
     public static void main(String[] args) throws NoSuchFieldException {
-        Class<?> type = (args[0]).getClass();
+    	Renderer r = new Renderer(12);
+//        Class<?> type = (args[0]).getClass();
+        Class<?> type = r.getClass();
         for(Field field: type.getDeclaredFields()) {
             System.out.println(field.getType().getSimpleName());
         }
+        System.out.println(r.render());
         //System.out.println("Die enthaltenen Variblen sind: " + type.getDeclaredField("firstVariable").toString());
     }
 
