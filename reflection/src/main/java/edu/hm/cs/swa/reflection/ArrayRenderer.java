@@ -16,11 +16,11 @@ public class ArrayRenderer {
     /*
     Soll einfaches Int-Array rendern! Nicht komplizierter machen!
      */
-    public String render(int[] array) throws IllegalAccessException {
+    public String render() throws IllegalAccessException {
 
-        for (int i = 0; i < array.length; i++) {
-            s += array[i] + ", ";
+        for (int i = 0; i < this.array.length; i++) {
+            s += this.array[i] + ", ";
         }
-        return s += "]\\n";
+        return s += "]";
     }
 }

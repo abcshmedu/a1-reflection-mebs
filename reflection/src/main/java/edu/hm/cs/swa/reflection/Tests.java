@@ -21,7 +21,7 @@ public class Tests {
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, InstantiationException, ClassNotFoundException {
     	SomeClass s = new SomeClass(3);
         Renderer r = new Renderer(s);
-        System.out.println(r.render(s));
+        System.out.println(r.render());
     }
 
 }

@@ -1,6 +1,6 @@
 package edu.hm.cs.swa.reflection;
 
-import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -29,21 +29,23 @@ public class Renderer {
      * @throws InstantiationException 
      * @throws ClassNotFoundException 
      */
-    public String render(Object obj) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, InstantiationException, ClassNotFoundException {
-        String s = "";
-        Class<?> type = obj.getClass();
+    public String render() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, InstantiationException, ClassNotFoundException, NoSuchFieldException {
+        String s = "Instance of ";
+        Class<?> type = this.obj.getClass();
+        s += type.getCanonicalName() + ":\n";
         for (Field field: type.getDeclaredFields()) {
     		field.setAccessible(true);
-        	if (field.isAnnotationPresent(RenderMe.class)){
+        	if (field.isAnnotationPresent(RenderMe.class)) {
         		RenderMe re = field.getAnnotation(RenderMe.class);
         		String reWith = re.with();
-        		if (reWith.equals("")) {
-                    s += field.getName() + " (Type " + field.getType().getCanonicalName() + "): " + field.get(obj) + "\\n";
+        		if ("".equals(reWith)) {        // "" steht vorne, da sonst Checkstyle meckert, dass ein String links von equals stehen soll
+                    s += field.getName() + " (Type " + field.getType().getCanonicalName() + "): " + field.get(obj) + "\n";
         		} else {
         			Class<?> cl = Class.forName(reWith);
-        			Object inst = cl.newInstance();
-        			Method renMeth = cl.getMethod("render", int[].class);
-                    s += field.getName() + " (Type " + field.getType().getCanonicalName() + "): " + renMeth.invoke(inst, field.get(obj)) + "\\n";
+                    Constructor constr = cl.getConstructor(int[].class);
+        			Object inst = constr.newInstance(field.get(obj));
+        			Method renMeth = cl.getMethod("render");
+                    s += field.getName() + " (Type " + field.getType().getCanonicalName() + "): " + renMeth.invoke(inst) + "\n";
         		}
         	}
         }
