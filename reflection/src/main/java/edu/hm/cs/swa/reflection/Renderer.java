@@ -30,11 +30,17 @@ public class Renderer {
      * @throws ClassNotFoundException 
      */
     public String render() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, InstantiationException, ClassNotFoundException, NoSuchFieldException {
+        // variable s stores our output-string-message
         String s = "Instance of ";
+        // type creates and stores an object of the given class stored in objectvariable obj
         Class<?> type = this.obj.getClass();
+        // type.getCanonicalName() gets the name of the class-file we have to analyze
         s += type.getCanonicalName() + ":\n";
+        // foreach-loop searches and gets all variables of the class-file we have to analyze
         for (Field field: type.getDeclaredFields()) {
+            // this command makes all variables accessible, whatever accessible type it has (public, package-private or private)
     		field.setAccessible(true);
+            // we look, if the found variable is annotated with @RenderMe or not
         	if (field.isAnnotationPresent(RenderMe.class)) {
         		RenderMe re = field.getAnnotation(RenderMe.class);
         		String reWith = re.with();
