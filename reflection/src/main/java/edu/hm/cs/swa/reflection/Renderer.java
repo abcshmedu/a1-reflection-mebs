@@ -32,7 +32,7 @@ public class Renderer {
     public String render() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, InstantiationException, ClassNotFoundException, NoSuchFieldException {
         // variable s stores our output-string-message
         String s = "Instance of ";
-        // type creates and stores an object of the given class stored in objectvariable obj
+        // type creates and stores an object of the given class stored in object variable obj
         Class<?> type = this.obj.getClass();
         // type.getCanonicalName() gets the name of the class-file we have to analyze
         s += type.getCanonicalName() + ":\n";
@@ -40,16 +40,25 @@ public class Renderer {
         for (Field field: type.getDeclaredFields()) {
             // this command makes all variables accessible, whatever accessible type it has (public, package-private or private)
     		field.setAccessible(true);
-            // we look, if the found variable is annotated with @RenderMe or not
+            // we analyze, if the found variable is annotated with @RenderMe or not
         	if (field.isAnnotationPresent(RenderMe.class)) {
+                // stores the the annotation as an RenderMe-object
         		RenderMe re = field.getAnnotation(RenderMe.class);
-        		String reWith = re.with();
-        		if ("".equals(reWith)) {        // "" steht vorne, da sonst Checkstyle meckert, dass ein String links von equals stehen soll
+                // gets the with-value of the found annotations
+                String reWith = re.with();
+                // we analyze wether the with-value of the found annotation is an empty string or not
+        		if ("".equals(reWith)) {        // "" is the first operand, because otherwise Checkstyle marks that the string has to be the first operand
+                    // if the with-value is an empty string we can build our string directly with the methods below
                     s += field.getName() + " (Type " + field.getType().getCanonicalName() + "): " + field.get(obj) + "\n";
         		} else {
+                    // otherwise, if the with-value is not empty, we have to use the class ArrayRenderer to build our string
+                    // cl creates and stores an object of the class given via the with-value of the found variable (in our case: ArrayRenderer-class)
         			Class<?> cl = Class.forName(reWith);
+                    // constr saves the constructor in ArrayRenderer-class as an contructor-object. int[].class searches for the constructor, with an int[]-array as parameter
                     Constructor constr = cl.getConstructor(int[].class);
+                    // inst creates a new instance of the class ArrayRenderer, calls its constructor and handles over the value (int[]-array) of the found variable
         			Object inst = constr.newInstance(field.get(obj));
+                    // now we can call the render-method of the class ArrayRenderer that creates us our needed string-representation of the int[]-array stored in our found variable
         			Method renMeth = cl.getMethod("render");
                     s += field.getName() + " (Type " + field.getType().getCanonicalName() + "): " + renMeth.invoke(inst) + "\n";
         		}
