@@ -1,5 +1,8 @@
 package edu.hm.cs.swa.reflection;
 
+import edu.hm.cs.swa.reflection.someclasses.SomeClass;
+import edu.hm.cs.swa.reflection.someclasses.SomeClassA;
+
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -20,7 +23,8 @@ public class Tests {
      */
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, InstantiationException, ClassNotFoundException {
     	SomeClass s = new SomeClass(3);
-        Renderer r = new Renderer(s);
+        SomeClassA a = new SomeClassA();
+        Renderer r = new Renderer(a);
         System.out.println(r.render());
     }
 
