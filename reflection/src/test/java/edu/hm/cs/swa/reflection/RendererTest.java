@@ -61,9 +61,16 @@ public class RendererTest {
         assertEquals("Instance of edu.hm.cs.swa.reflection.someclasses.SomeClassC:\n", renderer.render());
     }
 
-    /*TODO : Tests mit Ohnen Annotations
-             Tests mit anderen Arraytypen als int
+    @Test
+    public void methodRenderer() throws Exception {
+        renderer = new Renderer(toRender);
+        assertEquals("3 Methods are called!", renderer.renderMethod());
+    }
 
-     */
+    @Test
+    public void noMethod_methodRenderer() throws Exception {
+        renderer = new Renderer(toRenderA);
+        assertEquals("0 Methods are called!", renderer.renderMethod());
+    }
 
 }

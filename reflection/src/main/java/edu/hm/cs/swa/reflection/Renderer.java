@@ -67,4 +67,19 @@ public class Renderer {
         return s;
     }
 
+    public String renderMethod() throws InvocationTargetException, IllegalAccessException {
+        int counter = 0;
+        Class<?> type = this.obj.getClass();
+        for (Method method: type.getDeclaredMethods()) {
+            method.setAccessible(true);
+            if (method.isAnnotationPresent(RenderMe.class)) {
+                String mname = method.getName();
+                Object mtype = method.getReturnType();
+                Object result = method.invoke(obj);
+                counter++;
+            }
+        }
+        return counter + " Methods are called!";
+    }
+
 }

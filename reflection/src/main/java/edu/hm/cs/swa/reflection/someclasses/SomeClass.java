@@ -24,4 +24,12 @@ public class SomeClass {
     @RenderMe
     private String sayHello(){return "Hello";}
 
+    @RenderMe
+    private int giveMeFive(){return 5;}
+
+    @RenderMe
+    private Object giveNull(){return null;}
+
+    private String giveNothing(){return "nothing";}
+
 }
